@@ -1,0 +1,131 @@
+*{
+    background-color: #000000; color: #fffff0; box-sizing: border-box; font-family: 'Courier Prime', monospace;
+}
+a:hover{
+    text-decoration: none!important; color: #376996!important;
+}
+.container-fluid{
+    width: 100%; padding: 0; overflow: hidden;
+}
+
+/*  Custom Scrollbar  */
+
+::-webkit-scrollbar{
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #333634; 
+}
+::-webkit-scrollbar-thumb {
+    background: #000000; border-radius: 25%;
+}
+
+
+
+/* Navbar  */
+
+.nav{
+    width: 100%; background-color: #fffff0;
+}
+.nav-item {
+    background-color: #fffff0; font-size: 1.3rem; font-weight: bold;
+}
+.navbar-brand{
+    background-color: #fffff0;
+}
+.navbar{
+    background-color: #fffff0;
+}
+
+
+/* Search bar */
+
+.search{
+    width: 100%; padding: 2%; text-align: center;
+}
+.search-bar{
+    text-align: center; width: 50%;
+}
+
+/* footer */
+
+#section_footer_2{
+    margin-top: 1rem;
+}
+
+/* Index & Watchlist */
+
+.slide{
+    overflow: hidden;
+}
+.owl-carousel{
+    width: 95%; margin: 0 auto;
+}
+.index{
+    width: 95%; margin: 0 auto;
+}
+.card{
+    text-align: center; border: none;
+}
+.card-link{
+    font-size: 14px;
+}
+.card-title{
+    font-size: 16px;
+}
+.card-text{
+    margin-top: 1rem;
+}
+.chart{
+    padding: 2%;
+}
+.news{
+    padding: 2%; height: 70vh; overflow-y: scroll; 
+}
+.card-header{
+    background-color: #000000;
+}
+.newscard{
+    text-align: left;
+}
+
+/* Earnings Table */
+
+.earningtable{
+    padding: 2%; height: 50vh; overflow-y: scroll; 
+}
+
+/* Economic Calendar table */
+
+.economic-calender{
+    padding: 2%; height: 50vh; overflow-y: scroll; background-color: #000000;
+}
+.list-group-item{
+    background-color: #000000;
+}
+.list-group-item:hover{
+    background-color: #000000;
+}
+
+/* stock page CSS */
+
+/* stock image on each page. */
+
+.stock-img{
+    border-radius: 50%;
+}
+.media{
+    margin-bottom: 1.5rem;
+}
+.eachEarning{
+    padding: 2%; height: 50vh; overflow-y: scroll; 
+}
+.filings{
+    padding: 2%; height: 50vh; overflow-y: scroll; 
+}
+.filing-list{ 
+    font-size: 1.5rem;
+}
+.midsec{
+    margin-top: 2rem;
+}

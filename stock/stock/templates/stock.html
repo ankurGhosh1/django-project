@@ -1,0 +1,160 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container" style="margin: 0 auto;">
+  <div class="flex-row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
+      <img src="{{details.logo}}" class="stock-img" />
+      <h4 style="display: inline; text-align: center;">{{details.name}}</h4>
+      <h6 style="display: inline;">{{details.finnhubIndustry}}</h6>
+    </div>
+    <div class="row">
+      <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+        <h3>Close</h3><br />
+        <h4>{{quote.c}}</h4>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+        <h4>{{quote.o}}</h4>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+        <h4>{{quote.h}}</h4>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+        <h4>{{quote.l}}</h4>
+      </div>
+    </div>
+  </div> 
+</div>
+
+<div class="container-fluid news-chart">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-6 chart">
+            <h1>Hello World</h1>
+            <div class="tradingview-widget-container">
+              <div id="tradingview_0f56b"></div>
+              <!-- <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-MSFT/" rel="noopener" target="_blank"><span class="blue-text">MSFT Chart</span></a> by TradingView</div> -->
+              <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+              <script type="text/javascript">
+                // var params = window.location.href.split("=").pop();
+                // console.log(params);
+                new TradingView.widget(
+                {
+                "width": 980,
+                "height": 610,
+                "symbol": "NASDAQ:" + params,
+                "interval": "D",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "allow_symbol_change": true,
+                "container_id": "tradingview_0f56b"
+                }
+                );
+              </script>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 news">
+            <h1>Latest News</h1>
+            <ul class="list-unstyled">
+              {% for news in news %}
+              <li class="media">
+                <img src="{{news.image}}" class="mr-3" alt="News" width="50" height="50">
+                <div class="media-body">
+                  <h5 class="mt-0 mb-1"></span><a href="{{news.url}}">{{news.headline}}</a></h5>
+                  <p>{{news.summary}}</p>
+                  <span>{{news.source}}</span>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container-fluid midsec">
+    <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 filings">
+            <h1>Filings</h1>
+            <div class="list-group">
+                {% for filing in filing%}
+                <h3>{{filing.form}}<span class="float-right">{{filing.filedDate}}</span></h3>
+                <a href="{{filing.filingUrl}}" class="list-group-item list-group-item-action filing-list" target="_blank">Filing URL</a>
+                <a href="{{filing.reportUrl}}" class="list-group-item list-group-item-action filing-list" target="_blank">Reported URL</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 eachEarning">
+            <h1>Stock Earning</h1>
+            <div class="accordion" id="accordionExample" >
+                {% for eachEarning in eachEarning %}
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne">
+                        {{eachEarning.date}}
+                      </button>
+                    </h2>
+                  </div>
+              
+                  <div id="collapse-{{forloop.counter}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <table class="table table-dark">
+                            <thead>
+                              <tr>
+                                <th scope="col">Quarter</th>
+                                <th scope="col">Estimated EPS</th>
+                                <th scope="col">Actual EPS</th>
+                                <th scope="col">Estimated Revenue</th>
+                                <th scope="col">Actual Revenue</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{{eachEarning.quarter}}</td>
+                                <td>{{eachEarning.epsEstimate}}</td>
+                                <td>{{eachEarning.epsActual}}</td>
+                                <td>{{eachEarning.revenueEstimate}}</td>
+                                <td>{{eachEarning.revenueActual}}</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div id="tradingview_0f56b"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-MSFT/" rel="noopener" target="_blank"><span class="blue-text">MSFT Chart</span></a> by TradingView</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+  var params = window.location.href.split("=").pop();
+  console.log(params);
+  new TradingView.widget(
+  {
+  "width": 980,
+  "height": 610,
+  "symbol": "NASDAQ:" + params,
+  "interval": "D",
+  "timezone": "Etc/UTC",
+  "theme": "light",
+  "style": "1",
+  "locale": "en",
+  "toolbar_bg": "#f1f3f6",
+  "enable_publishing": false,
+  "allow_symbol_change": true,
+  "container_id": "tradingview_0f56b"
+}
+  );
+  </script>
+</div>
+<!-- TradingView Widget END -->
+
+{% endblock %}
