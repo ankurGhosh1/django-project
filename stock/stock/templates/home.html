@@ -23,7 +23,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-6 chart">
-            <h1>Hello World</h1>
+            <!-- <h1>Hello World</h1> -->
             <div class="tradingview-widget-container">
               <div id="tradingview_0f56b"></div>
               <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
@@ -65,6 +65,31 @@
         </div>
     </div>
 </div>
+<div class="container-fluid top-gainers">
+  <table class="table table-sm table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Symbol</th>
+        <th scope="col">Name</th>
+        <th scope="col">MarketCap</th>
+        <th scope="col">Day Range</th>
+        <th scope="col">Percent Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for allgainer in allGainer %}
+      <tr>
+        <td>{{allgainer.symbol}}</td>
+        <td>{{allgainer.shortName}}</td>
+        <td>{{allgainer.marketCap}}</td>
+        <td>{{allgainer.regularMarketDayRange}}</td>
+        <td>{{allgainer.regularMarketChangePercent}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-4 col-md-3 col-sm-2 economic-calender">
@@ -95,7 +120,6 @@
                   </tr>
                 </thead>
                 <tbody>
-                {% for company in companyProfile%}
                 {% for earnings in earnings %}
                   <tr>
                     <td><img src="{{company.logo}}" alt="logo" /></td>
@@ -106,7 +130,6 @@
                     <td>{{earnings.epsEstimate}}</td>
                     <td>{{earnings.revenueEstimate}}</td>
                   </tr>
-                {% endfor %}
                 {% endfor %}
                 </tbody>
             </table>

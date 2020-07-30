@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.contrib import messages
 import requests 
+from django.contrib.auth.models import User, auth
 
 # Create your views here.
 
@@ -21,9 +23,13 @@ def index(request):
 
     allGainers = []
 
+    i = 0
+
     for eachGainer in topGainersAPI['quotes']:
+        if (i >= 10):
+            break;
         allGainers.append(eachGainer)
-    
+        i += 1
 
     # News API call    
 
@@ -38,23 +44,32 @@ def index(request):
     # Earnings API call
 
     earnings = []
-    symbol = ''
+    symbols = []
+    # logo = []
 
     response = requests.get('https://finnhub.io/api/v1/calendar/earnings?from=2020-07-21&to=2020-08-15&token=bs9jpfnrh5rahoaohehg')
     apiResponseEarnings = response.json()
-    #reverserEarning = reversed(apiResponseEarnings)  
-    #print(reverserEarning)
 
     for allearnings in apiResponseEarnings['earningsCalendar']:
         symbol = allearnings['symbol']
+        symbols.append(symbol)
         # if (allearnings['epsEstimate' and 'revenueEstimate']  != 0):  
         earnings.append(allearnings)
+    
 
-    # Company Profile API call 
+    # for eachlogo in symbols:
+    #     # Company Profile API call 
 
-    response = requests.get('https://finnhub.io/api/v1/stock/profile2?symbol=' + symbol + '&token=bs9jpfnrh5rahoaohehg') # trying to use this as image link for earnings table
-    apiResponseProfile = response.json()
+    #     response = requests.get('https://finnhub.io/api/v1/stock/profile2?symbol=' + eachlogo + '&token=bs9jpfnrh5rahoaohehg') 
+    #     apiResponseLogo = response.json()
 
+    #     if(not apiResponseLogo['logo']):
+    #         logo.append('eachlogo')
+
+    # print(logo)
+        
+    
+    # print(symbols)
         
     # Events API call
 
@@ -68,7 +83,7 @@ def index(request):
 
     # render HTML Template
 
-    return render(request, 'home.html', {'news': news, 'earnings': earnings, 'events': events, 'companyProfile': apiResponseProfile, 'allGainer': allGainers })
+    return render(request, 'home.html', {'news': news, 'earnings': earnings, 'events': events, 'allGainer': allGainers })
 
 
 # Dynamic slug Route
@@ -130,7 +145,70 @@ def stock(request, searchText):
         response = requests.get('https://finnhub.io/api/v1/quote?symbol=' + searchText + '&token=bs9jpfnrh5rahoaohehg')
         quoteAPI = response.json()
 
-        return render(request, 'stock.html', {'details': apiResponseProfile, 'news': eachNews, 'eachEarning': eachEarning, 'filing': filingsAPI, 'quote': quoteAPI})
+        # Description API Call
+
+        url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/" + searchText + "/asset-profile"
+
+        headers = {
+            'x-rapidapi-host': "yahoo-finance15.p.rapidapi.com",
+            'x-rapidapi-key': "e9255b460cmsh863ffa7bd83b3bep19d626jsne90553c61953"
+            }
+
+        response = requests.request("GET", url, headers=headers)
+        desc = response.json()
+
+        
+        description = desc['assetProfile']
+         
+
+        return render(request, 'stock.html', {'details': apiResponseProfile, 'news': eachNews, 'eachEarning': eachEarning, 'filing': filingsAPI, 'quote': quoteAPI, 'description': description})
     else:
         return JsonResponse({"message": "No stock"})
+
+
+def signup(request):
+    return render(request, 'signup.html')
+
+def signupAuth(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+    if(password == password2):
+        user = User(username= username, first_name = firstname, last_name = lastname, email=email, password=password)
+        user.set_password(password)
+        user.save()
+        messages.success(request, 'New User Created')
+        return redirect('/signup/')
+    else:
+        messages.info(request, 'Passwords Do Not Match')
+        return redirect('/signup/')
+
+username = ''
+
+def profile(request):
+    return render(request, 'profile.html', { 'username': username})
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
         
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/profile/')
+        else:
+            messages.error(request, 'Invalid Credentials')
+            return redirect('/signup/')
+
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
