@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 import requests 
 from django.contrib.auth.models import User, auth
-
+from .models import Profile
 # Create your views here.
 
 
@@ -191,7 +191,10 @@ def signupAuth(request):
 username = ''
 
 def profile(request):
-    return render(request, 'profile.html', { 'username': username})
+    if (request.user.is_authenticated):
+        return render(request, 'profile.html', { 'username': username})
+    else:
+        return redirect('/signup/')
 
 def login(request):
     if request.method == 'POST':
@@ -208,7 +211,13 @@ def login(request):
             return redirect('/signup/')
 
 
-
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+def upload(request): 
+    if request.method == 'POST':
+        avatar = request.FILES['avatar']
+        Profile.objects.filter(user_id = request.user.id).update(avatar = avatar)
+    print(request.user.id)
+    return redirect('/profile/')

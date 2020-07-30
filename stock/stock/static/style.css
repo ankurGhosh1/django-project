@@ -218,4 +218,7 @@ h2{
 .top-gainers{
     padding: 2% 5%;
 }
+.hide{
+    display: none
+}
 

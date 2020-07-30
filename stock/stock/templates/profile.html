@@ -1,10 +1,17 @@
 {% extends 'index.html' %}
 
 {% block content %}
-
-<h1>Hello, {{ username }}</h1>
-<img src="" height="300px" width="200px" alt="profile-pic"/>
-<h6><a href="/img/">Upload Image</a></h6>
+<div class="container-fluid" id="">
+    <h1>Hello, {{ username }}</h1>
+    <img src="" height="300px" width="200px" alt="profile-pic" />
+    <br />
+    <button id="upload">Upload Image</button>
+    <form action="/upload/" method="POST" enctype="multipart/form-data" id="profile-form" class="hide">
+        {% csrf_token %}
+        <input type="file" class="file" name="avatar"></input>
+        <button type="submit">Submit</button>
+    </form>
+</div>
 
 
 {% endblock %}
