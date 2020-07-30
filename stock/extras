@@ -1,0 +1,23 @@
+quandl : https://api.rakuten.net/brianiswu/api/quandl1
+
+yahoo dividend: https://api.rakuten.net/integraatio/api/yahoofinance-stocks1?endpoint=apiendpoint_a8082735-7fc7-43ed-904a-c5c1c67063b2
+
+yahoo all: https://english.api.rakuten.net/apidatacenter-api-data/api/yahoo-finance15?endpoint=apiendpoint_2c17730d-defd-474a-8da0-b3d6d1b81bde
+
+zenserf: https://zenserp.com/documentation/ API Key: 19cadac0-c751-11ea-b257-57e359a338d8
+
+marketstack: https://marketstack.com/documentation#introduction : API KEY: b4d2825bc598e8d9ab77eb6fc25555d4
+
+homepageIdea: http://themes.potenzaglobalsolutions.com/html/mentor-bootstrap-4-admin-dashboard-template/index-stock-market.html
+
+tradingview charts: https://in.tradingview.com/HTML5-stock-forex-bitcoin-charting-library/?feature=technical-analysis-charts  // https://github.com/tradingview
+
+newsapi.org: https://newsapi.org/register/success APIKey: 41593923297b4a15a38cb9cdd65eb2b3
+
+Colors: 
+
+#000000 - black
+#FFFFFC - white
+#376996 - blue
+#FF1B1C - red
+#0CF574 - green
