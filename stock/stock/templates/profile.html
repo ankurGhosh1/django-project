@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class="container-fluid" id="">
-    <h1>Hello, {{ username }}</h1>
-    <img src="" height="300px" width="200px" alt="profile-pic" />
+    <h1>Hello, {{ user.username }}</h1>
+    <img src="{{user.avatar}}" height="300px" width="200px" alt="profile-pic" />
     <br />
     <button id="upload">Upload Image</button>
     <form action="/upload/" method="POST" enctype="multipart/form-data" id="profile-form" class="hide">

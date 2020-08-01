@@ -91,6 +91,24 @@
         </div>
     </div>
 </div>
+<div class="container-fluid keystats">
+  <div class="row">
+    <ul class="list-group list-group-flush col-lg-6 col-xl-6 col-md-6 col-sm-6">
+      <li class="list-group-item">MarketCap</li>
+      <li class="list-group-item">Outstanding Shares</li>
+      <li class="list-group-item">52 Weeks Change</li>
+      <li class="list-group-item">Quarterly Earnings Growth</li>
+      <li class="list-group-item">S&P 52 Week change</li>
+    </ul>
+    <ul class="list-group list-group-flush col-lg-6 col-xl-6 col-md-6 col-sm-6">
+      <li class="list-group-item">{{keyStatistics.enterpriseValue.longFmt}}</li>
+      <li class="list-group-item">{{keyStatistics.sharesOutstanding.fmt}}</li>
+      <li class="list-group-item">{{keyStatistics.52WeekChange.fmt}}</li>
+      <li class="list-group-item">{{keyStatistics.earningsQuarterlyGrowth.fmt}}</li>
+      <li class="list-group-item">{{keyStatistics.SandP52WeekChange.fmt}}</li>
+    </ul>
+  </div>
+</div>
 <div class="container-fluid midsec">
     <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 filings">

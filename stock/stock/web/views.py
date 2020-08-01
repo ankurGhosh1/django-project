@@ -159,9 +159,23 @@ def stock(request, searchText):
 
         
         description = desc['assetProfile']
-         
 
-        return render(request, 'stock.html', {'details': apiResponseProfile, 'news': eachNews, 'eachEarning': eachEarning, 'filing': filingsAPI, 'quote': quoteAPI, 'description': description})
+        # Key Stats API Call
+
+        url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/" + searchText + "/default-key-statistics"
+
+        headers = {
+            'x-rapidapi-host': "yahoo-finance15.p.rapidapi.com",
+            'x-rapidapi-key': "e9255b460cmsh863ffa7bd83b3bep19d626jsne90553c61953"
+            }
+
+        response = requests.request("GET", url, headers=headers)
+        keyStats = response.json()
+        
+        keyStatistics = keyStats['defaultKeyStatistics']
+        # print(keyStatistics)
+
+        return render(request, 'stock.html', {'details': apiResponseProfile, 'news': eachNews, 'eachEarning': eachEarning, 'filing': filingsAPI, 'quote': quoteAPI, 'description': description, 'keyStatistics': keyStatistics})
     else:
         return JsonResponse({"message": "No stock"})
 
@@ -221,3 +235,4 @@ def upload(request):
         Profile.objects.filter(user_id = request.user.id).update(avatar = avatar)
     print(request.user.id)
     return redirect('/profile/')
+
