@@ -3,7 +3,10 @@ from django.http import JsonResponse
 from django.contrib import messages
 import requests 
 from django.contrib.auth.models import User, auth
-from .models import Profile
+from .models import Profile, Portfolio, Watchlist
+import json
+# from rest_framework import serializers
+
 # Create your views here.
 
 
@@ -206,7 +209,17 @@ username = ''
 
 def profile(request):
     if (request.user.is_authenticated):
-        return render(request, 'profile.html', { 'username': username})
+        stocksPortfolio = Watchlist.objects.all()
+        stock = []
+        allname = []
+        for eachStockWatchlist in stocksPortfolio:
+            name = str(eachStockWatchlist).upper()
+            response = requests.get('https://finnhub.io/api/v1/quote?symbol=' + name + '&token=bs9jpfnrh5rahoaohehg')
+            eachName = response.json()
+            stock.append(eachName)
+            allname.append(name)
+        # print(allname)
+        return render(request, 'profile.html', { 'username': username, 'stock': stock, 'name': allname})
     else:
         return redirect('/signup/')
 
@@ -231,8 +244,23 @@ def logout(request):
 
 def upload(request): 
     if request.method == 'POST':
-        avatar = request.FILES['avatar']
-        Profile.objects.filter(user_id = request.user.id).update(avatar = avatar)
-    print(request.user.id)
+        profile = Profile(
+            user = User.objects.get(id = request.user.id),
+            avatar = request.FILES['avatar']
+        )
+        profile.save()
+    return redirect('/profile/')
+    
+def watchlist(request):
+    if request.method == 'POST':
+        watchlist = Watchlist(
+            user = User.objects.get(id = request.user.id),
+            symbol = request.POST['stockname']
+        )
+        watchlist.save()
     return redirect('/profile/')
 
+def stockapi(request):
+    check = Watchlist.objects.filter(user = request.user.id).values()
+    data = list(check)
+    return JsonResponse(data, safe=False)

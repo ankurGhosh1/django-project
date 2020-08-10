@@ -32,25 +32,32 @@ $('.owl-dots').hide();
 
 $('.collapse').collapse();
 
+const symbols = []
+
 fetch('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bs9jpfnrh5rahoaohehg')
 .then(res => res.json())
-.then(data => console.log(data))
-
-
-// constructs the suggestion engine
-var states = new Bloodhound({
+.then(data => {
+    for (var i=0; i<data.length; i++){
+		if(data[i].type == "EQS"){
+		    symbols.push(data[i].displaySymbol);
+        }
+	}
+	// constructs the suggestion engine
+	var states = new Bloodhound({
 	datumTokenizer: Bloodhound.tokenizers.whitespace,
 	queryTokenizer: Bloodhound.tokenizers.whitespace,
 	// `states` is an array of state names defined in "The Basics"
-	local: states
-  });
-  
-  $('#bloodhound .typeahead').typeahead({
-	hint: true,
-	highlight: true,
-	minLength: 1
-  },
-  {
-	name: 'states',
-	source: states
-  });
+		local: symbols
+  	});
+	
+	$('#bloodhound .typeahead').typeahead({
+		hint: true,
+		highlight: true,
+		minLength: 1
+	},
+	{
+		name: 'states',
+		source: states
+	});
+})
+

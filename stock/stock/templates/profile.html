@@ -2,15 +2,40 @@
 
 {% block content %}
 <div class="container-fluid" id="">
-    <h1>Hello, {{ user.username }}</h1>
-    <img src="{{user.avatar}}" height="300px" width="200px" alt="profile-pic" />
-    <br />
-    <button id="upload">Upload Image</button>
-    <form action="/upload/" method="POST" enctype="multipart/form-data" id="profile-form" class="hide">
-        {% csrf_token %}
-        <input type="file" class="file" name="avatar"></input>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <h1>Hello, {{ user.username }}</h1>
+            <img src="{{user.avatar}}" height="300px" width="200px" alt="profile-pic" />
+            <br />
+            <button id="upload">Upload Image</button>
+            <form action="/upload/" method="POST" enctype="multipart/form-data" id="profile-form" class="hide">
+                {% csrf_token %}
+                <input type="file" class="file" name="avatar"></input>
+                <button type="submit">Submit</button>
+            </form>
+         </div>
+        <div class="col-lg-5 col-md-5 col-sm-5">
+            <h1>Hello World</h1>
+            
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-3">
+            <h3>Add Stock to Watchlist:</h3>
+            <form method="POST" action="/watchlist/">
+                {% csrf_token %}
+                <input type="text" name="stockname" /></input>
+                <button type="submit">Submit</button>
+            </form>
+            <div class="list-group portfolio">
+                {% for stock in stock%}
+                {% for name in name%}
+                <a href="/stock/?searchText={{name}}" class="list-group-item list-group-item-action">{{name}}</a>
+                <span class="each"><b>Open:</b> {{stock.o}}</span><span class="each"><b>High:</b> {{stock.h}}</span><span class="each"><b>Low:</b> {{stock.l}}</span><span class="each"><b>Close:</b> {{stock.c}}</span>
+                {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 
 

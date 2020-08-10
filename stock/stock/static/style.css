@@ -44,7 +44,10 @@ a:hover{
     width: 100%; padding: 2%; text-align: center;
 }
 .search-bar{
-    text-align: center; width: 50%;
+    text-align: left; width: 50%;
+}
+.twitter-typeahead{
+    display: inline!important;
 }
 
 /* footer */
@@ -222,3 +225,9 @@ h2{
     display: none
 }
 
+.portfolio{
+    height: 70vh; overflow-y: scroll; display: block;
+}
+.each{
+    display: inline; font-size: 11px; padding-right: 10px;
+}
